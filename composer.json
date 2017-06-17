@@ -1,0 +1,13 @@
+{
+    "name": "griffins/genie",
+    "description": "A simple sequence generator",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Griffins Oringo",
+            "email": "oringogriffns78@gmail.com"
+        }
+    ],
+    "require": {}
+}
