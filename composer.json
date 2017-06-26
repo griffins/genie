@@ -1,13 +1,26 @@
 {
-    "name": "griffins/genie",
-    "description": "A simple sequence generator",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Griffins Oringo",
-            "email": "oringogriffns78@gmail.com"
-        }
-    ],
-    "require": {}
+  "name": "griffins/sequence",
+  "description": "A simple sequence generator",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Griffins Oringo",
+      "email": "oringogriffns78@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Sequence\\": "src/"
+    }
+  },
+  "require": {},
+  "require-dev": {
+    "phpunit/phpunit": "~4.0"
+  },
+  "scripts": {
+    "tests": [
+      "vendor/bin/phpunit"
+    ]
+  }
 }
