@@ -5,6 +5,7 @@ A simple sequence generator
 
 #installation
     todo
+    
 #basics
     todo
     
