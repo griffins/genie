@@ -81,30 +81,51 @@ class Factory
         } else {
             $raw = $startAt;
         }
-        $no = null;
         $backlog = null;
-        $status = false;
+        $status = true;
         $step = 1;
         while (true) {
-            $no = $this->replaceStuff($no);
+            $no = $this->replaceStuff($raw);
             if ($dontUse) {
                 if (!$smartSearch && !$dontUse($no)) {
                     return $no;
                 } else {
+                    //if we can use this sequence
                     if (!$dontUse($no)) {
-                        $step *= 0.5;
-                        if ($status === false) {
-                            $backlog = $raw;
+                        if ($step == 1) {
+                            return $no;
+                        } else {
+                            if ($step > 8) {
+                                $step = max(1, ($step - $step / 2));
+                            } else {
+                                $step -= 1;
+                            }
+                            if ($status === false) {
+                                $raw = $backlog;
+                            } else if ($step == 1) {
+                                $minus = $this->replaceStuff($this->decrementWord($raw, $pattern_));
+                                if ($dontUse($minus)) {
+                                    return $no;
+                                }
+                            }
+
+                            $status = false;
+//                            sleep(3);
                         }
                     } else {
-                        if ($status === false) {
-                            return $this->incrementWord($raw, $pattern_);
+                        //if we cant use this number and previous number was valid
+                        // mean we decreased so much
+                        if ($status === false && $step == 2) {
+                            $minus = $this->replaceStuff($this->decrementWord($raw, $pattern_));
+                            if ($step == 2 && !$dontUse($minus)) {
+                                return $minus;
+                            }
                         }
                         $step *= 2;
-                        $raw = $backlog;
+                        $backlog = $raw;
                         $status = true;
                         $plus = $this->replaceStuff($this->incrementWord($raw, $pattern_));
-                        if (!$dontUse($plus)) {
+                        if ($step == 2 && !$dontUse($plus)) {
                             return $plus;
                         }
                     }
@@ -221,11 +242,11 @@ class Factory
                 }
                 break;
             case static::CHARACTER_ALPHA_NUMERIC:
-                $alpha = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $alpha = $this->alphabet;
                 $count = strlen($alpha);
                 $position = strpos($alpha, strtoupper($value));
                 if ($position === false) {
-                    return new \Exception('Invalid character');
+                    throw new \Exception('Invalid character');
                 }
                 $position++;
                 if ($position == $count) {
@@ -281,10 +302,10 @@ class Factory
 
     protected function replaceStuff($no)
     {
-        $no = str_replace("yyyy", date('Y'), $no);
-        $no = str_replace("mm", date('m'), $no);
-        $no = str_replace("dd", date('d'), $no);
-        $no = str_replace("yy", date('y'), $no);
+        $no = str_replace("<yyyy>", date('Y'), $no);
+        $no = str_replace("<mm>", date('m'), $no);
+        $no = str_replace("<dd>", date('d'), $no);
+        $no = str_replace("<yy>", date('y'), $no);
         return $no;
     }
 
