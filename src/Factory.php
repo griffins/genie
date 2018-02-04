@@ -299,7 +299,7 @@ class Factory
                 $position++;
                 if ($position == $count) {
                     $value = $alpha[0];
-                    
+
                     return true;
                 } else {
                     $value = $alpha[$position];
