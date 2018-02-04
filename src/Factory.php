@@ -4,7 +4,6 @@ namespace Sequence;
 
 class Factory
 {
-
     const CHARACTER_DIGIT = 'd';
     const CHARACTER_ALPHA_NUMERIC = 'c';
 
@@ -16,6 +15,7 @@ class Factory
         if ($alphabet) {
             $instance->alphabet = $alphabet;
         }
+
         return $instance;
     }
 
@@ -102,7 +102,7 @@ class Factory
                             }
                             if ($status === false) {
                                 $raw = $backlog;
-                            } else if ($step == 1) {
+                            } elseif ($step == 1) {
                                 $minus = $this->replaceStuff($this->decrementWord($raw, $pattern_));
                                 if ($dontUse($minus)) {
                                     return $no;
@@ -176,6 +176,7 @@ class Factory
                 $x--;
             }
         }
+
         return implode('', $chars);
     }
 
@@ -216,28 +217,31 @@ class Factory
                 $x--;
             }
         }
+
         return implode('', $chars);
     }
 
-
     /**
-     *  increments a value by a single character or returns true is we need to carry
+     *  increments a value by a single character or returns true is we need to carry.
      *
      * @param $value
      * @param $type
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
-
     public function incrementCharacter(&$value, $type)
     {
         switch ($type) {
-            case static::CHARACTER_DIGIT :
+            case static::CHARACTER_DIGIT:
                 if ($value == 9) {
                     $value = 0;
+
                     return true;
                 } else {
                     $value++;
+
                     return false;
                 }
                 break;
@@ -251,9 +255,11 @@ class Factory
                 $position++;
                 if ($position == $count) {
                     $value = $alpha[0];
+
                     return true;
                 } else {
                     $value = $alpha[$position];
+
                     return false;
                 }
                 break;
@@ -261,23 +267,26 @@ class Factory
     }
 
     /**
-     *  decrements a value by a single character or returns true is we need to borrow
+     *  decrements a value by a single character or returns true is we need to borrow.
      *
      * @param $value
      * @param $type
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
-
     public function decrementCharacter(&$value, $type)
     {
         switch ($type) {
             case 'd':
                 if ($value == 0) {
                     $value = 9;
+
                     return true;
                 } else {
                     $value--;
+
                     return false;
                 }
                 break;
@@ -291,9 +300,11 @@ class Factory
                 $position++;
                 if ($position == $count) {
                     $value = $alpha[0];
+
                     return true;
                 } else {
                     $value = $alpha[$position];
+
                     return false;
                 }
                 break;
@@ -302,11 +313,11 @@ class Factory
 
     protected function replaceStuff($no)
     {
-        $no = str_replace("<yyyy>", date('Y'), $no);
-        $no = str_replace("<mm>", date('m'), $no);
-        $no = str_replace("<dd>", date('d'), $no);
-        $no = str_replace("<yy>", date('y'), $no);
+        $no = str_replace('<yyyy>', date('Y'), $no);
+        $no = str_replace('<mm>', date('m'), $no);
+        $no = str_replace('<dd>', date('d'), $no);
+        $no = str_replace('<yy>', date('y'), $no);
+
         return $no;
     }
-
 }
