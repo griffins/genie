@@ -3,7 +3,6 @@
 
 class GeneratorTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testWordGeneration()
     {
         $factory = Sequence\Factory::create();
@@ -20,8 +19,10 @@ class GeneratorTest extends \PHPUnit\Framework\TestCase
         $value = $factory->next($format, function () use (&$set) {
             if (!$set) {
                 $set = true;
+
                 return true;
             }
+
             return false;
         });
         self::assertEquals($value, 'CIT-221/002', 'Word sequence skipping failed');
