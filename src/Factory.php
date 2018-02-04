@@ -27,9 +27,9 @@ class Factory
                 $startAt = null;
             } else {
                 $regex = "/^$pattern$/";
-                $regex = str_replace('yyyy', date('Y'), $regex);
-                $regex = str_replace('mm', date('m'), $regex);
-                $regex = str_replace('dd', date('d'), $regex);
+                $regex = str_replace('<yyyy>', date('Y'), $regex);
+                $regex = str_replace('<mm>', date('m'), $regex);
+                $regex = str_replace('<dd>', date('d'), $regex);
                 $regex = str_replace('#', '\d', $regex);
                 $regex = str_replace('?', '\w', $regex);
                 preg_match($regex, $startAt, $mms);
@@ -110,11 +110,10 @@ class Factory
                             }
 
                             $status = false;
-//                            sleep(3);
                         }
                     } else {
                         //if we cant use this number and previous number was valid
-                        // mean we decreased so much
+                        // means we decreased so much
                         if ($status === false && $step == 2) {
                             $minus = $this->replaceStuff($this->decrementWord($raw, $pattern_));
                             if ($step == 2 && !$dontUse($minus)) {
@@ -300,7 +299,7 @@ class Factory
                 $position++;
                 if ($position == $count) {
                     $value = $alpha[0];
-
+                    
                     return true;
                 } else {
                     $value = $alpha[$position];
